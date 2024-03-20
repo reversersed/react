@@ -7,4 +7,7 @@ body{
 :root{
     --background-color: #000;
     --secondary-background: #000;
+    --light-neutral-color: rgba(255,255,255,0.25);
+    --accent-color: cyan;
+    --white: white;
 }

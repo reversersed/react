@@ -22,10 +22,10 @@ div.login .inputCheckBx {
 	display: flex;
 }
 div.login .inputCheckBx input {
-	color: gray;
+	color: var(--light-neutral-color);
 }
 div.login .inputCheckBx span {
-	color: gray;
+	color: var(--light-neutral-color);
 	text-align: center;
 	font-size: 12pt;
 }
@@ -36,25 +36,25 @@ div.login div.signup {
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	color: gray;
+	color: var(--light-neutral-color);
 }
 div.login div.signup a{
 	text-decoration: none;
-	color: gray;
+	color: var(--light-neutral-color);
 	cursor: pointer;
 	transition: 0.5s;
 }
 div.login div.signup a:hover {
-	color: white;
+	color: var(--white);
 	transition: 0.5s;
 }
 div.login .inputBx input {
 	width: 100%;
 	background: var(--secondary-background);
-	border: 1px solid rgba(255,255,255,0.25);
+	border: 1px solid var(--light-neutral-color);
 	padding: 10px;
 	outline: none;
-	color: white;
+	color: var(--white);
 	font-size: 1em;
 	border-radius: 5px;
 	transition: 0.5s;
@@ -65,12 +65,12 @@ div.login .inputBx input:focus ~ span {
 	font-size: 0.65em;
 	padding: 0 10px;
 	color: var(--background-color);
-	background: cyan;
+	background: var(--accent-color);
 	letter-spacing: 0.2em;
 }
 div.login .inputBx input:valid,
 div.login .inputBx input:focus {
-	border: 1px solid cyan;
+	border: 1px solid var(--accent-color);
 }
 div.login .inputBx span {
 	position: absolute;
@@ -80,24 +80,24 @@ div.login .inputBx span {
 	padding: 10px;
 	font-size: 1em;
 	pointer-events: none;
-	color: rgba(255,255,255,0.25);
+	color: var(--light-neutral-color);
 	text-transform: uppercase;
 }
 div.login .submitButton {
 	width: 80%;
 	background: var(--secondary-background);
-	border: 1px solid rgba(255,255,255,0.25);
+	border: 1px solid var(--light-neutral-color);
 	padding: 10px;
     margin-top: 50px;
     margin-left: 45px;
 	outline: none;
-	color: white;
+	color: var(--white);
 	font-size: 1em;
 	border-radius: 5px;
 	transition: 0.5s;
     cursor: pointer;
 }
 div.login .submitButton:hover{
-    border-color: cyan;
+    border-color: var(--accent-color);
     letter-spacing: 2pt;
 }
