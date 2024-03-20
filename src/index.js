@@ -1,17 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState } from 'react'
+import ReactDOM from "react-dom/client"
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import Navbar from './components/navbar/navbar.component'
+import MoviePage from './components/moviepage/moviepage.component'
+import Login from './components/login/login.component'
+import Registration from './components/registration/registration.component'
+import NotFound from './components/notfound/notfound.component'
+import useToken from './components/useToken';
+
+function App() {
+  const {isLogged, saveToken, removeToken} = useToken();
+
+  return (
+    <>
+        {isLogged && (<Navbar removeSession={removeToken}/>)}
+        <BrowserRouter>
+          <Routes>
+            {!isLogged && (<>
+              <Route path="*" element={<Login setToken={saveToken}/>}/>
+              <Route path="/signup" element={<Registration setToken={saveToken}/>}/>
+            </>)}
+            {isLogged && (<>
+              <Route path="/" element={<MoviePage/>}/>
+            </>)}
+            <Route path="*" element={<NotFound/>}/>
+          </Routes>
+        </BrowserRouter>
+        <Outlet/>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
+)

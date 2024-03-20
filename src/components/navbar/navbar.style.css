@@ -1,0 +1,93 @@
+div.navigation {
+	width: 70px;
+	height: 100vh;
+	background: #fff;
+	border-radius: 0 20px 20px 0;
+	padding: 0;
+	margin: 0;
+    top:0;
+    left:0;
+	position: fixed;
+	display: flex;
+    flex-direction: column;
+}
+div.navigation ul {
+	position: relative;
+	display: block;
+	list-style: none;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+div.navigation ul li {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 70px;
+	line-height: 70px;
+}
+div.navigation ul li a {
+	position: relative;
+	display: block;
+	text-decoration: none;
+	font-weight: 400;
+	color: .333;
+}
+div.navigation ul li a .icon {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 24px;
+	z-index: 1;
+	transition: 0.5s;
+}
+div.navigation ul li a .icon.active {
+	color: #fff;
+}
+div.navigation ul li a .text {
+	position: absolute;
+	left: 110px;
+	background: #fff;
+	padding: 10px 15px;
+	line-height: initial;
+	border-radius: 10px;
+	transform: translateY(50%);
+	transition: 0.5s;
+	visibility: hidden;
+	font-weight: 600;
+	opacity: 0;
+}
+div.navigation ul li a .text:after {
+	content: '';
+	position: absolute;
+	top: 13px;
+	left: -5px;
+	background: #fff;
+	width: 10px;
+	height: 10px;
+	max-height: 100%;
+	transform: rotate(45deg);
+	border-radius: 25%;
+}
+div.navigation ul li a:hover .text {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(50%) translateX(-35%);
+}
+div.navigation .indicator {
+	width: 60px;
+	height: 60px;
+	background: .333;
+	position: absolute;
+	border-radius: 50%;
+	top: 5px;
+	left: 50%;
+	transform-origin: center;
+	transform: translateX(-50%);
+	transition: 0.5s;
+	z-index: 0;
+	opacity: 0;
+}
