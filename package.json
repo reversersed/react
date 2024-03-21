@@ -2,6 +2,7 @@
   "name": "react-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://localhost:7007",
   "dependencies": {
     "outlet": "^0.1.3",
     "react": "^18.2.0",

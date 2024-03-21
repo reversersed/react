@@ -7,7 +7,10 @@ body{
 :root{
     --background-color: #000;
     --secondary-background: #000;
+    --accent-background: #fff;
     --light-neutral-color: rgba(255,255,255,0.25);
     --accent-color: cyan;
+    --secondary-accent-color: #7e2ee6;
     --white: white;
+    --left-margin: 80px;
 }

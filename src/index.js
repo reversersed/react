@@ -8,6 +8,7 @@ import Login from './components/login/login.component'
 import Registration from './components/registration/registration.component'
 import NotFound from './components/notfound/notfound.component'
 import useToken from './components/useToken';
+import Lab from './components/lab/lab.component'
 
 function App() {
   const {isLogged, saveToken, removeToken} = useToken();
@@ -23,6 +24,7 @@ function App() {
             </>)}
             {isLogged && (<>
               <Route path="/" element={<MoviePage/>}/>
+              <Route path="/lab" element={<Lab/>}/>
             </>)}
             <Route path="*" element={<NotFound/>}/>
           </Routes>

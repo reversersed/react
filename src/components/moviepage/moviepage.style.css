@@ -1,5 +1,6 @@
 div.moviepage{
-    position: absolute;
+    position: relative;
     display: block;
-    left: 80px;
+    padding-left: var(--left-margin);
+    color: var(--white)
 }
