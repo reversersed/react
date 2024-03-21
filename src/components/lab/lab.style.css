@@ -41,3 +41,43 @@ div.MainLab ol.Movie li button:hover {
     font-size: 11pt;
     font-weight: 400;
 }
+div.MainLab form.Insertion {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    gap: 10px;
+}
+div.MainLab form.Insertion input.TextInput {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--light-neutral-color);
+    padding: 2px 2px 5px 10px;
+    outline: none;
+    color: var(--white);
+    transition: 0.5s;
+}
+div.MainLab form.Insertion input.TextInput:valid,
+div.MainLab form.Insertion input.TextInput:focus {
+    border-bottom: 2px solid var(--accent-color);
+    transition: 0.5s;
+}
+div.MainLab form.Insertion input.sendButton {
+    width: 80px;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 4px 5px 4px 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: 0.5s;
+}
+div.MainLab form.Insertion input.sendButton:hover {
+    transition: 0.5s;
+    border: 1px solid var(--accent-color);
+    letter-spacing: 2px;
+}
+h2.movieList {
+    border-top: 2px solid var(--light-neutral-color);
+    padding-top: 10px;
+}

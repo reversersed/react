@@ -7,7 +7,7 @@ div.navigation {
 	margin: 0;
     top:0;
     left:0;
-	position: absolute;
+	position: fixed;
 	display: flex;
     flex-direction: column;
 	z-index: 999;

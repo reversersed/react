@@ -27,15 +27,15 @@ const MovieList = ({movie, setMovie, removeMovie}) => {
             })
     }
     return (<>
-        <h2>Список фильмов:</h2>
+        <h2 className="movieList">Список фильмов</h2>
         <ol className="Movie">
         {movie.map(({id, name, description, genres}) =>{
-            let genreline = "Жанры: "
+            let genreline = ""
             genres.map(({id, name}) => genreline = genreline+name+", ")
             genreline = genreline.slice(0,-2)
             return (<li key={id} id={id}>
                 <h3>{name}</h3>
-                <span>{genreline}</span><br/>
+                {genreline && (<><span>Жанры: {genreline}</span><br/></>)}
                 {description && (<><span>{description}</span><br/></>)}
                 <button onClick={(e) => {
                     e.preventDefault()
@@ -50,14 +50,25 @@ const MovieInsert = ({addMovie}) => {
     const createMovie = (e) => {
         e.preventDefault()
         const [name, description] = [e.target.elements.name.value, e.target.elements.description.value]
-        console.log(name)
-        console.log(description)
+        
+        const create = async () => {
+            const movie = [name, description]
+            const requestOptions = {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({name, description})
+            }
+            return await fetch("api/Movies", requestOptions)
+                .then(response => response.json())
+                .then(data => addMovie(data))
+        }
+        create()
     }
     return (<>
-        <h3>Создание фильма</h3>
+        <h2>Создание фильма</h2>
         <form className="Insertion" onSubmit={createMovie}>
-            <input type="text" name="name" placeholder="Название" className="TextInput"/>
-            <input type="text" name="description" placeholder="Описание" className="TextInput"/>
+            <input type="text" autoComplete="movieName" name="name" placeholder="Название" required className="TextInput"/>
+            <input type="text" autoComplete="movieDescription" name="description" placeholder="Описание" required className="TextInput"/>
             <input type="submit" value="Создать" className="sendButton"/>
         </form>
     </>)
