@@ -47,11 +47,19 @@ const MovieList = ({movie, setMovie, removeMovie}) => {
     </>)
 }
 const MovieInsert = ({addMovie}) => {
-
+    const createMovie = (e) => {
+        e.preventDefault()
+        const [name, description] = [e.target.elements.name.value, e.target.elements.description.value]
+        console.log(name)
+        console.log(description)
+    }
     return (<>
-        <div className="Insertion">
-
-        </div>
+        <h3>Создание фильма</h3>
+        <form className="Insertion" onSubmit={createMovie}>
+            <input type="text" name="name" placeholder="Название" className="TextInput"/>
+            <input type="text" name="description" placeholder="Описание" className="TextInput"/>
+            <input type="submit" value="Создать" className="sendButton"/>
+        </form>
     </>)
 }
 export default function Lab(){

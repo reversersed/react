@@ -10,6 +10,7 @@ div.navigation {
 	position: absolute;
 	display: flex;
     flex-direction: column;
+	z-index: 999;
 }
 div.navigation ul {
 	position: relative;
