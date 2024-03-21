@@ -67,9 +67,21 @@ const MovieInsert = ({addMovie}) => {
     return (<>
         <h2>Создание фильма</h2>
         <form className="Insertion" onSubmit={createMovie}>
-            <input type="text" autoComplete="movieName" name="name" placeholder="Название" required className="TextInput"/>
-            <input type="text" autoComplete="movieDescription" name="description" placeholder="Описание" required className="TextInput"/>
-            <input type="submit" value="Создать" className="sendButton"/>
+            <input type="text" 
+                    autoComplete="movieName" 
+                    name="name" 
+                    placeholder="Название" 
+                    required 
+                    className="TextInput"/>
+            <input type="text" 
+                    autoComplete="movieDescription" 
+                    name="description" 
+                    placeholder="Описание" 
+                    required 
+                    className="TextInput"/>
+            <input type="submit" 
+                    value="Создать" 
+                    className="sendButton"/>
         </form>
     </>)
 }
