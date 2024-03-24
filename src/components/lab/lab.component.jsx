@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 
 import './lab.style.css'
+import { useParams } from "react-router-dom";
 
 const MovieList = ({movie, setMovie, removeMovie}) => {
 
@@ -9,7 +10,7 @@ const MovieList = ({movie, setMovie, removeMovie}) => {
             const requestOptions = {
                 method: 'GET'
             }
-            return await fetch("api/Movies",requestOptions)
+            return await fetch(`/api/Movies`,requestOptions)
                 .then(r => r.json())
                 .then((data) => setMovie(data))
         }
@@ -20,7 +21,7 @@ const MovieList = ({movie, setMovie, removeMovie}) => {
         const requestOptions = {
             method: 'DELETE'
         }
-        return await fetch(`api/Movies/${id}`,requestOptions)
+        return await fetch(`/api/Movies/${id}`,requestOptions)
             .then(response => {
                 if(response.ok)
                     removeMovie(id)
@@ -41,6 +42,7 @@ const MovieList = ({movie, setMovie, removeMovie}) => {
                     e.preventDefault()
                     remove(id)
                 }}>Удалить</button>
+                <a href={'/lab/'+id}>Редактировать</a>
             </li>)
         })}
         </ol>
@@ -52,13 +54,12 @@ const MovieInsert = ({addMovie}) => {
         const [name, description] = [e.target.elements.name.value, e.target.elements.description.value]
         
         const create = async () => {
-            const movie = [name, description]
             const requestOptions = {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({name, description})
             }
-            return await fetch("api/Movies", requestOptions)
+            return await fetch("/api/Movies", requestOptions)
                 .then(response => response.json())
                 .then(data => addMovie(data))
         }
@@ -85,15 +86,90 @@ const MovieInsert = ({addMovie}) => {
         </form>
     </>)
 }
+const MovieEdit = (props) => {
+    const [movie, setMovie] = useState(null)
+
+    useEffect(() => {
+        const getMovie = async () =>{
+            const requestOptions = {
+                method: 'GET'
+            }
+            return await fetch(`/api/Movies/${props.id}`,requestOptions)
+                .then(r => r.json())
+                .then((data) => setMovie(data))
+        }
+        getMovie()
+    }, [setMovie])
+    const editMovie = async (e) => {
+        e.preventDefault()
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(movie)
+        }
+        return await fetch(`/api/Movies/${movie.id}`, requestOptions)
+                .then(r => {
+                    if(r.status == 200)
+                        window.location.replace("/lab/")
+                })
+    }
+    if(movie == null)
+        return <></>
+    return (<>
+        <h2>Редактирование фильма</h2>
+        <form className="Insertion" onSubmit={editMovie}>
+            <input type="text" 
+                    autoComplete="movieName" 
+                    name="name" 
+                    placeholder="Название"
+                    value={movie.name}
+                    onChange={(e) => {
+                        e.preventDefault()
+                        if(e.target.value == null)
+                            return
+                        let object = Object.assign({}, movie)
+                        object.name = e.target.value
+                        setMovie(object)
+                    }}
+                    required 
+                    className="TextInput"/>
+            <input type="text" 
+                    autoComplete="movieDescription" 
+                    name="description" 
+                    placeholder="Описание" 
+                    value={movie.description}
+                    onChange={(e) => {
+                        e.preventDefault()
+                        if(e.target.value == null)
+                            return
+                        let object = Object.assign({}, movie)
+                        object.description = e.target.value
+                        setMovie(object)
+                    }}
+                    required 
+                    className="TextInput"/>
+            <input type="submit" 
+                    value="Изменить"
+                    className="sendButton"/>
+        </form>
+        <a href="/lab/" className="backButton">Назад</a>
+    </>)
+}
 export default function Lab(){
     const [movies, setMovies] = useState([])
     const removeMovies = (movieid) => setMovies(movies.filter(({id}) => id !== movieid))
     const addMovie = (movie) => setMovies([...movies, movie])
+    
+    const params = useParams()
+    const id = params.id
 
     return (<>
         <div className="MainLab">
-            <MovieInsert addMovie={addMovie}/>
-            <MovieList movie={movies} setMovie={setMovies} removeMovie={removeMovies}/>
+            {id && <MovieEdit id={id}/>}
+            {!id && (<>
+                <MovieInsert addMovie={addMovie}/>
+                <MovieList movie={movies} setMovie={setMovies} removeMovie={removeMovies}/>
+            </>)}
         </div>
     </>)
 }

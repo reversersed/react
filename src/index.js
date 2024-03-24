@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from "react-dom/client"
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom"
 
 import Navbar from './components/navbar/navbar.component'
 import MoviePage from './components/moviepage/moviepage.component'
@@ -25,8 +25,10 @@ function App() {
             {isLogged && (<>
               <Route path="/" element={<MoviePage/>}/>
               <Route path="/lab" element={<Lab/>}/>
+              <Route path="/lab/:id" element={<Lab/>}/>
             </>)}
-            <Route path="*" element={<NotFound/>}/>
+            <Route path="/404" element={<NotFound/>}/>
+            <Route path="*" element={<Navigate to='/404'/>}/>
           </Routes>
         </BrowserRouter>
         <Outlet/>

@@ -41,6 +41,27 @@ div.MainLab ol.Movie li button:hover {
     font-size: 11pt;
     font-weight: 400;
 }
+div.MainLab ol.Movie li a {
+    margin-left: 20px;
+    margin-top: 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 4px 8px 4px 8px;
+    font-size: 10pt;
+    font-weight: 200;
+    border-radius: 5px;
+    color: var(--light-neutral-color);
+    transition: 0.75s;
+    text-decoration: none;
+    cursor: pointer;
+}
+div.MainLab ol.Movie li a:hover {
+    transition: 0.5s;
+    color: white;
+    border: 1px solid var(--accent-color);
+    font-size: 11pt;
+    font-weight: 400;
+}
 div.MainLab form.Insertion {
     display: flex;
     flex-direction: column;
@@ -73,6 +94,25 @@ div.MainLab form.Insertion input.sendButton {
     transition: 0.5s;
 }
 div.MainLab form.Insertion input.sendButton:hover {
+    transition: 0.5s;
+    border: 1px solid var(--accent-color);
+    letter-spacing: 2px;
+}
+div.MainLab a.backButton {
+    width: 65px;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid transparent;
+    text-align: center;
+    font-size: 8pt;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 4px 6px 4px 6px;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: 0.5s;
+}
+div.MainLab a.backButton:hover {
     transition: 0.5s;
     border: 1px solid var(--accent-color);
     letter-spacing: 2px;
