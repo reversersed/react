@@ -1,16 +1,26 @@
 div.login {
-    background: var(--secondary-background);
+	background: var(--secondary-background);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    flex-direction: column;
-    height: 90vh;
+	flex-direction: column;
+	height: 90vh;
 }
 div.login .inputBx {
 	width: 300px;
 	font-size: 16pt;
 	position: relative;
 	padding: 20px;
+}
+div.login .errorMessage {
+	max-width: 300px;
+	color: var(--accent-color);
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding-left: 20px;
+	margin-top: -15px;
+	margin-bottom: 15px;
 }
 div.login .inputCheckBx {
 	width: 300px;
@@ -38,7 +48,7 @@ div.login div.signup {
 	display: flex;
 	color: var(--light-neutral-color);
 }
-div.login div.signup a{
+div.login div.signup a {
 	text-decoration: none;
 	color: var(--light-neutral-color);
 	cursor: pointer;
@@ -76,7 +86,7 @@ div.login .inputBx span {
 	position: absolute;
 	transition: 0.5s;
 	left: 20px;
-    top: 18px;
+	top: 18px;
 	padding: 10px;
 	font-size: 1em;
 	pointer-events: none;
@@ -88,16 +98,16 @@ div.login .submitButton {
 	background: var(--secondary-background);
 	border: 1px solid var(--light-neutral-color);
 	padding: 10px;
-    margin-top: 50px;
-    margin-left: 45px;
+	margin-top: 50px;
+	margin-left: 45px;
 	outline: none;
 	color: var(--white);
 	font-size: 1em;
 	border-radius: 5px;
 	transition: 0.5s;
-    cursor: pointer;
+	cursor: pointer;
 }
-div.login .submitButton:hover{
-    border-color: var(--accent-color);
-    letter-spacing: 2pt;
+div.login .submitButton:hover {
+	border-color: var(--accent-color);
+	letter-spacing: 2pt;
 }
