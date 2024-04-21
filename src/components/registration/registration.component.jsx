@@ -1,22 +1,19 @@
 import { React, useState } from "react";
+import { Button, Input, Form } from "antd";
 import "./registration.style.css";
 
 export default function Registration(args) {
-	const [login, setLogin] = useState();
-	const [password, setPassword] = useState();
-	const [repeat_pass, setRepeatPassword] = useState();
 	const [error, setError] = useState();
 	const setUser = args.setUser;
 
 	const attempregistration = async (e) => {
-		e.preventDefault();
 		const requestOptions = {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				username: login,
-				password: password,
-				repeatpassword: repeat_pass,
+				username: e.login,
+				password: e.password,
+				repeatpassword: e.repeat_pass,
 			}),
 		};
 		return await fetch("api/user/register", requestOptions)
@@ -41,6 +38,8 @@ export default function Registration(args) {
 				typeof data !== "undefined" &&
 					typeof data.errors !== "undefined" &&
 					setError(data.errors.RepeatPassword);
+				console.log(data.errors);
+				console.log(data.error);
 			});
 	};
 	const renderErrors = () => {
@@ -52,42 +51,56 @@ export default function Registration(args) {
 		));
 	};
 	return (
-		<>
-			<div className="registration">
-				<form onSubmit={attempregistration}>
-					<div className="inputBx">
-						<input
-							type="text"
-							autoComplete="new-registration"
-							required="required"
-							onChange={(e) => setLogin(e.target.value)}
-						/>
-						<span>Логин</span>
-					</div>
-					<div className="inputBx">
-						<input
-							type="password"
-							autoComplete="new-password"
-							required="required"
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						<span>Пароль</span>
-					</div>
-					<div className="inputBx">
-						<input
-							type="password"
-							autoComplete="new-repeat-password"
-							required="required"
-							onChange={(e) => setRepeatPassword(e.target.value)}
-						/>
-						<span>Повторите пароль</span>
-					</div>
-					{renderErrors()}
-					<div className="submitButton">
-						<input type="submit" value="Зарегистрироваться" />
-					</div>
-				</form>
-			</div>
-		</>
+		<div
+			style={{
+				display: "block flex",
+				flexDirection: "column",
+				alignItems: "center",
+				justifyContent: "center",
+				height: "70vh",
+			}}
+		>
+			<h3>Регистрация</h3>
+			<Form
+				onFinish={attempregistration}
+				name="basic"
+				labelCol={{ span: 8 }}
+				wrapperCol={{ span: 16 }}
+				style={{ maxWidth: 800 }}
+				initialValues={{ remember: true }}
+				onFinishFailed={renderErrors}
+				autoComplete="off"
+			>
+				<Form.Item
+					label="Логин"
+					name="login"
+					rules={[{ required: true, message: "Пожалуйста, введите логин" }]}
+				>
+					<Input />
+				</Form.Item>
+				<Form.Item
+					label="Пароль"
+					name="password"
+					rules={[{ required: true, message: "Пожалуйста, введите пароль" }]}
+				>
+					<Input.Password />
+				</Form.Item>
+				<Form.Item
+					label="Повторите"
+					name="repeat_pass"
+					rules={[{ required: true, message: "Пожалуйста, введите пароль" }]}
+				>
+					<Input.Password />
+				</Form.Item>
+
+				{renderErrors()}
+				<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+					<Button type="primary" htmlType="submit">
+						Войти
+					</Button>
+					<br />
+				</Form.Item>
+			</Form>
+		</div>
 	);
 }

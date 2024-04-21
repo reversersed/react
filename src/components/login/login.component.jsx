@@ -43,20 +43,28 @@ export default function Login(args) {
 	};
 	const renderError = () => <div key="1">{error}</div>;
 	return (
-		<>
+		<div
+			style={{
+				display: "block flex",
+				flexDirection: "column",
+				alignItems: "center",
+				justifyContent: "center",
+				height: "70vh",
+			}}
+		>
 			<h3>Авторизация</h3>
 			<Form
 				onFinish={attempLogin}
 				name="basic"
 				labelCol={{ span: 8 }}
 				wrapperCol={{ span: 16 }}
-				style={{ maxWidth: 600 }}
+				style={{ maxWidth: 800 }}
 				initialValues={{ remember: true }}
 				onFinishFailed={renderError}
 				autoComplete="off"
 			>
 				<Form.Item
-					label="Имя пользователя"
+					label="Логин"
 					name="username"
 					rules={[{ required: true, message: "Пожалуйста, введите логин" }]}
 				>
@@ -64,7 +72,7 @@ export default function Login(args) {
 				</Form.Item>
 				<Form.Item
 					label="Пароль"
-					name="username"
+					name="password"
 					rules={[{ required: true, message: "Пожалуйста, введите пароль" }]}
 				>
 					<Input.Password />
@@ -81,8 +89,12 @@ export default function Login(args) {
 					<Button type="primary" htmlType="submit">
 						Войти
 					</Button>
+					<br />
 				</Form.Item>
+				<span>
+					Еще нет аккаунта? <a href="/signup">Зарегистрироваться</a>
+				</span>
 			</Form>
-		</>
+		</div>
 	);
 }
