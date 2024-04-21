@@ -21,8 +21,6 @@ export default function Registration(args) {
 		};
 		return await fetch("api/user/register", requestOptions)
 			.then((response) => {
-				response.status === 200 &&
-					setUser({ isAuthenticated: true, userName: "" });
 				return response.json();
 			})
 			.then((data) => {
@@ -30,8 +28,12 @@ export default function Registration(args) {
 					typeof data !== "undefined" &&
 					typeof data.userName !== "undefined"
 				) {
-					setUser({ isAuthenticated: true, userName: data.userName });
-					navigate("/");
+					setUser({
+						isAuthenticated: true,
+						userName: data.userName,
+						userRole: data.userRole,
+					});
+					window.location.replace("/");
 				}
 				typeof data !== "undefined" &&
 					typeof data.error !== "undefined" &&
@@ -81,11 +83,9 @@ export default function Registration(args) {
 						<span>Повторите пароль</span>
 					</div>
 					{renderErrors()}
-					<input
-						className="submitButton"
-						type="submit"
-						value="Зарегистрироваться"
-					/>
+					<div className="submitButton">
+						<input type="submit" value="Зарегистрироваться" />
+					</div>
 				</form>
 			</div>
 		</>

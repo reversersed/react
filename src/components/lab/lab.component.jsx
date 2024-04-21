@@ -47,7 +47,7 @@ const MovieList = ({ movie, setMovie, removeMovie, user }) => {
 									<br />
 								</>
 							)}
-							{user.isAuthenticated && (
+							{user.userRole === "admin" && (
 								<button
 									onClick={(e) => {
 										e.preventDefault();
@@ -57,7 +57,9 @@ const MovieList = ({ movie, setMovie, removeMovie, user }) => {
 									Удалить
 								</button>
 							)}
-							{user.isAuthenticated && <a href={"/lab/" + id}>Редактировать</a>}
+							{user.userRole === "admin" && (
+								<a href={"/lab/" + id}>Редактировать</a>
+							)}
 						</li>
 					);
 				})}
@@ -196,7 +198,7 @@ export default function Lab(props) {
 				{id && user.isAuthenticated && <MovieEdit id={id} />}
 				{!id && (
 					<>
-						{user.isAuthenticated && <MovieInsert addMovie={addMovie} />}
+						{user.userRole === "admin" && <MovieInsert addMovie={addMovie} />}
 						<MovieList
 							movie={movies}
 							setMovie={setMovies}

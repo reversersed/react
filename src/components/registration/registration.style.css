@@ -6,14 +6,16 @@ div.registration {
 	flex-direction: column;
 	height: 90vh;
 }
+div.registration form {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 20px;
+	padding: 20px;
+}
 div.registration .inputBx {
 	width: 300px;
 	font-size: 16pt;
 	position: relative;
-	margin-top: 20px;
-	padding: 20px;
-	padding-left: 0;
-	padding-bottom: 0;
+	padding-top: 20px;
 }
 div.registration .errorMessage {
 	max-width: 300px;
@@ -60,12 +62,16 @@ div.registration .inputBx span {
 	text-transform: uppercase;
 }
 div.registration .submitButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 25px;
+}
+div.registration .submitButton input {
 	width: 80%;
 	background: var(--secondary-background);
 	border: 1px solid var(--light-neutral-color);
 	padding: 10px;
-	margin-top: 50px;
-	margin-left: 35px;
 	outline: none;
 	color: var(--white);
 	font-size: 1em;
@@ -73,7 +79,7 @@ div.registration .submitButton {
 	transition: 0.5s;
 	cursor: pointer;
 }
-div.registration .submitButton:hover {
+div.registration .submitButton input:hover {
 	border-color: var(--accent-color);
 	letter-spacing: 2pt;
 }

@@ -1,29 +1,22 @@
 import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./login.style.css";
+import { Button, Checkbox, Input, Form } from "antd";
 
 export default function Login(args) {
-	const [login, setLogin] = useState();
-	const [password, setPassword] = useState();
-	const [remember, setRemember] = useState(false);
 	const [error, setError] = useState();
 	const setUser = args.setUser;
 
 	const attempLogin = async (e) => {
-		e.preventDefault();
 		const requestOptions = {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				username: login,
-				password: password,
-				rememberme: remember,
+				username: e.username,
+				password: e.password,
+				rememberme: e.remember,
 			}),
 		};
 		return await fetch("api/user/login", requestOptions)
 			.then((response) => {
-				response.status === 200 &&
-					setUser({ isAuthenticated: true, username: "" });
 				return response.json();
 			})
 			.then(
@@ -32,7 +25,11 @@ export default function Login(args) {
 						typeof data !== "undefined" &&
 						typeof data.username !== "undefined"
 					) {
-						setUser({ isAuthenticated: true, userName: data.username });
+						setUser({
+							isAuthenticated: true,
+							userName: data.username,
+							userRole: data.userRole,
+						});
 						window.location.replace("/");
 					}
 					typeof data !== "undefined" &&
@@ -44,50 +41,48 @@ export default function Login(args) {
 				}
 			);
 	};
-
+	const renderError = () => <div key="1">{error}</div>;
 	return (
 		<>
-			<div className="login">
-				<form onSubmit={attempLogin}>
-					<div className="inputBx">
-						<input
-							type="text"
-							autoComplete="new-login"
-							required="required"
-							onChange={(e) => setLogin(e.target.value)}
-						/>
-						<span>Логин</span>
-					</div>
-					<div className="inputBx">
-						<input
-							type="password"
-							autoComplete="new-password"
-							required="required"
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						<span>Пароль</span>
-					</div>
-					{error && (
-						<div className="errorMessage">
-							<span className="message">{error}</span>
-						</div>
-					)}
-					<div className="inputCheckBx">
-						<input
-							type="checkbox"
-							checked={remember}
-							onChange={(e) => setRemember(e.target.checked)}
-						/>
-						<span>Запомнить меня</span>
-					</div>
-					<input className="submitButton" type="submit" value="Войти" />
-					<div className="signup">
-						<span>
-							Нет аккаунта? <a href="/signup">Зарегистрироваться</a>
-						</span>
-					</div>
-				</form>
-			</div>
+			<h3>Авторизация</h3>
+			<Form
+				onFinish={attempLogin}
+				name="basic"
+				labelCol={{ span: 8 }}
+				wrapperCol={{ span: 16 }}
+				style={{ maxWidth: 600 }}
+				initialValues={{ remember: true }}
+				onFinishFailed={renderError}
+				autoComplete="off"
+			>
+				<Form.Item
+					label="Имя пользователя"
+					name="username"
+					rules={[{ required: true, message: "Пожалуйста, введите логин" }]}
+				>
+					<Input />
+				</Form.Item>
+				<Form.Item
+					label="Пароль"
+					name="username"
+					rules={[{ required: true, message: "Пожалуйста, введите пароль" }]}
+				>
+					<Input.Password />
+				</Form.Item>
+				<Form.Item
+					name="remember"
+					valuePropName="checked"
+					wrapperCol={{ offset: 8, span: 16 }}
+				>
+					<Checkbox>Запомнить меня</Checkbox>
+					{renderError()}
+				</Form.Item>
+				<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+					<Button type="primary" htmlType="submit">
+						Войти
+					</Button>
+				</Form.Item>
+			</Form>
 		</>
 	);
 }
