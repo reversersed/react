@@ -7,7 +7,6 @@ import MoviePage from "./components/moviepage/moviepage.component";
 import Login from "./components/login/login.component";
 import Registration from "./components/registration/registration.component";
 import NotFound from "./components/notfound/notfound.component";
-import Lab from "./components/lab/lab.component";
 import MovieComponent from "./components/movie/movie.component";
 
 function App() {
@@ -57,8 +56,6 @@ function App() {
 					>
 						<Route index element={<MoviePage />} />
 						<Route path="/:movieId" element={<MovieComponent user={user} />} />
-						<Route path="/lab" element={<Lab user={user} />} />
-						<Route path="/lab/:id" element={<Lab user={user} />} />
 						{!user.isAuthenticated && (
 							<>
 								<Route path="/login" element={<Login setUser={setUser} />} />

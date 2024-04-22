@@ -83,8 +83,8 @@ export default function Login(args) {
 					wrapperCol={{ offset: 8, span: 16 }}
 				>
 					<Checkbox>Запомнить меня</Checkbox>
-					{renderError()}
 				</Form.Item>
+				{renderError()}
 				<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
 					<Button type="primary" htmlType="submit">
 						Войти

@@ -154,6 +154,11 @@
 		font-size: 14px;
 	}
 }
+.icon-wrapper {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+}
 @media screen and (max-width: 600px) {
 	.movie-cover img {
 		min-height: 300px;

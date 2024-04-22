@@ -9,7 +9,7 @@ import "./layout.style.css";
 
 export default function FilmLayout(args) {
 	const user = args.user;
-	const setUser = args.setuser;
+	const setUser = args.setUser;
 	const userAgent = navigator.userAgent;
 	const [currentKey, setCurrentKey] = useState("/");
 	const [collapsed, setCollapsed] = useState(true);
@@ -41,7 +41,7 @@ export default function FilmLayout(args) {
 							userName: "",
 							userRole: "guest",
 						});
-					window.location.replace("/");
+					window.location.replace("/" + path);
 					return response.json();
 				});
 			},

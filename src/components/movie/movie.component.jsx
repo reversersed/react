@@ -1,7 +1,12 @@
 import react, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Form, Input, Modal } from "antd";
-import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
+import { Button, Slider, Input, Modal } from "antd";
+import {
+	DoubleLeftOutlined,
+	DoubleRightOutlined,
+	FrownOutlined,
+	SmileOutlined,
+} from "@ant-design/icons";
 import "./movie.style.css";
 
 export default function MovieComponent(props) {
@@ -11,6 +16,8 @@ export default function MovieComponent(props) {
 	const pageOffset = 15;
 	const [page, setPage] = useState(1);
 	const [reviewWriteOpen, setReviewWriteOpen] = useState(false);
+	const [rating, setRating] = useState(3);
+	const [reviewText, setReviewText] = useState("");
 
 	useEffect(() => {
 		const getData = async (e) => {
@@ -80,13 +87,23 @@ export default function MovieComponent(props) {
 			</div>
 		);
 	};
-	const sendReview = async (e) => {
-		const form = e.form;
-		form.validateFields((err, value) => {
-			if (err) return;
+	const preColorCls = rating >= 2.5 ? "" : "icon-wrapper-active";
+	const nextColorCls = rating >= 2.5 ? "icon-wrapper-active" : "";
 
-			console.log(values);
-		});
+	const sendReview = async (e) => {
+		const requestOptions = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				Text: reviewText,
+				Rating: rating,
+			}),
+		};
+		return fetch(`/api/Movies/${movie.id}/review`, requestOptions).then(
+			(response) => {
+				response.status === 200 && window.location.reload();
+			}
+		);
 	};
 	return (
 		<div className="movie-page">
@@ -211,12 +228,28 @@ export default function MovieComponent(props) {
 				okText="Отправить"
 				title="Написать отзыв"
 				onOk={sendReview}
+				okButtonProps={{ disabled: reviewText.length < 6 }}
 			>
-				<Form>
-					<Form.Item label="Текст отзыва" name="text">
-						<Input />
-					</Form.Item>
-				</Form>
+				<Input.TextArea
+					required
+					allowClear
+					placeholder="Напишите Ваши мысли о фильме"
+					text={reviewText}
+					onChange={(e) => setReviewText(e.target.value)}
+				/>
+				<span>Ваша оценка фильму: {rating}/5</span>
+				<div className="icon-wrapper">
+					<FrownOutlined className={preColorCls} />
+					<Slider
+						min={0}
+						max={5}
+						onChange={setRating}
+						value={rating}
+						step={0.5}
+						style={{ width: 300 }}
+					/>
+					<SmileOutlined className={nextColorCls} />
+				</div>
 			</Modal>
 		</div>
 	);
