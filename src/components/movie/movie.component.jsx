@@ -219,7 +219,9 @@ export default function MovieComponent(props) {
 							</Button>
 						)}
 					</div>
-
+					{(!movie || !movie.reviews || movie.reviews.length <= 0) && (
+						<h4 style={{ margin: 20 }}>Отзывов пока нет...</h4>
+					)}
 					{movie && movie.reviews && renderReviews()}
 					{movie && movie.reviews && renderPages()}
 				</div>

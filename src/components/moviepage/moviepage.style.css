@@ -4,13 +4,13 @@ div.moviepage {
 	color: var(--white);
 }
 
-.movies-list{
+.movies-list {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 }
 
-.movies-list .movie-item{
+.movies-list .movie-item {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -18,38 +18,38 @@ div.moviepage {
 	margin: 20px;
 	padding: 5px;
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 12px;
-    border-radius: 20px;
+	border-radius: 20px;
 }
 
-.movies-list .movie-item .image{
+.movies-list .movie-item .image {
 	max-width: 300px;
 	max-height: 500px;
 	height: 300px;
 	padding: 5px;
 }
 
-.movies-list .movie-item .image img{
+.movies-list .movie-item .image img {
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 }
 
-.movie-item .movie-title{
+.movie-item .movie-title {
 	margin: 5px;
 	text-decoration: none;
 	font-size: 16px;
+	max-width: 200px;
+	text-align: center;
 }
 
-.movie-item-wrapper{
+.movie-item-wrapper {
 	display: flex;
 	flex-direction: column;
 	color: #000000;
-	transition: all .3s;
+	transition: all 0.3s;
 }
 
-.movie-item-wrapper:hover{
+.movie-item-wrapper:hover {
 	color: #000000;
 	transform: scale(1.1) rotate(2deg);
-	
-	
 }
