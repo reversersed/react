@@ -57,7 +57,7 @@ function App() {
 						element={<FilmLayout user={user} setUser={setUser} />}
 					>
 						<Route index element={<MoviePage />} />
-						<Route path="/:movieId" element={<MovieComponent/>}/>
+						<Route path="/:movieId" element={<MovieComponent user={user} />} />
 						<Route path="/lab" element={<Lab user={user} />} />
 						<Route path="/lab/:id" element={<Lab user={user} />} />
 						{!user.isAuthenticated && (

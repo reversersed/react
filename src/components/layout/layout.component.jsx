@@ -9,7 +9,7 @@ import "./layout.style.css";
 export default function FilmLayout(args) {
 	const user = args.user;
 	const userAgent = navigator.userAgent;
-	console.log(userAgent);
+
 	const [collapsed, setCollapsed] = useState(true);
 	const {
 		token: { colorBgContainer, borderRadiusLG },
@@ -48,7 +48,7 @@ export default function FilmLayout(args) {
 			}}
 		>
 			<Sider
-				collapsible={userAgent.includes("Mobile")? false: true}
+				collapsible={userAgent.includes("Mobile") ? false : true}
 				collapsed={collapsed}
 				onCollapse={(value) => setCollapsed(value)}
 			>
