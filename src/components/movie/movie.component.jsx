@@ -122,7 +122,8 @@ export default function MovieComponent(props) {
 							)}
 							{movie && movie.tagline && (
 								<div>
-									<span>Слоган</span> <i>{movie && movie.tagline}</i>
+									<span>Слоган</span>{" "}
+									<i color="gray">«{movie && movie.tagline}»</i>
 								</div>
 							)}
 							{movie && movie.director && (
