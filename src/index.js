@@ -9,6 +9,7 @@ import Registration from "./components/registration/registration.component";
 import NotFound from "./components/notfound/notfound.component";
 import Lab from "./components/lab/lab.component";
 import Logout from "./components/logout/logout.component";
+import MovieComponent from "./components/movie/movie.component";
 
 function App() {
 	const [user, setUser] = useState({
@@ -56,6 +57,7 @@ function App() {
 						element={<FilmLayout user={user} setUser={setUser} />}
 					>
 						<Route index element={<MoviePage />} />
+						<Route path="/:movieId" element={<MovieComponent/>}/>
 						<Route path="/lab" element={<Lab user={user} />} />
 						<Route path="/lab/:id" element={<Lab user={user} />} />
 						{!user.isAuthenticated && (
