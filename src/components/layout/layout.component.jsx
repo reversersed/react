@@ -1,21 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { LogoutOutlined, LoginOutlined, HomeOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme, Modal } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
+const confirm = Modal.confirm;
 
 import "./layout.style.css";
 
 export default function FilmLayout(args) {
 	const user = args.user;
+	const setUser = args.setuser;
 	const userAgent = navigator.userAgent;
-
+	const [currentKey, setCurrentKey] = useState("/");
 	const [collapsed, setCollapsed] = useState(true);
+
+	let path = window.location.href.split("/")[3];
+	useEffect(() => {
+		setCurrentKey("/" + path);
+	}, [setCurrentKey]);
+	const handleClick = (e) =>
+		setCurrentKey(e.key == "disabled" ? "/" + path : e.key);
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
-	let path = window.location.href.split("/")[3];
 
+	const confirmLogout = () => {
+		confirm({
+			title: "Выход из аккаунта",
+			content: "Вы точно хотите выйти из аккаунта?",
+			okText: "Да",
+			cancelText: "Нет",
+			async onOk() {
+				const requestOptions = {
+					method: "POST",
+				};
+				await fetch("api/user/logout", requestOptions).then((response) => {
+					response.status === 200 &&
+						setUser({
+							isAuthenticated: false,
+							userName: "",
+							userRole: "guest",
+						});
+					window.location.replace("/");
+					return response.json();
+				});
+			},
+		});
+	};
 	let items = [
 		{
 			label: <Link to="/">Главная</Link>,
@@ -36,9 +67,9 @@ export default function FilmLayout(args) {
 		items = [
 			...items,
 			{
-				label: <Link to="/logout">Выход</Link>,
+				label: <a onClick={confirmLogout}>Выход</a>,
 				icon: <LogoutOutlined />,
-				key: "/logout",
+				key: "disabled",
 			},
 		];
 	return (
@@ -54,8 +85,9 @@ export default function FilmLayout(args) {
 			>
 				<div className="demo-logo-vertical" />
 				<Menu
+					onClick={handleClick}
 					theme="dark"
-					defaultSelectedKeys={["/" + path]}
+					selectedKeys={[currentKey]}
 					items={items}
 					mode="inline"
 				/>

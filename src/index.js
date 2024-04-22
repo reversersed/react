@@ -8,7 +8,6 @@ import Login from "./components/login/login.component";
 import Registration from "./components/registration/registration.component";
 import NotFound from "./components/notfound/notfound.component";
 import Lab from "./components/lab/lab.component";
-import Logout from "./components/logout/logout.component";
 import MovieComponent from "./components/movie/movie.component";
 
 function App() {
@@ -68,9 +67,6 @@ function App() {
 									element={<Registration setUser={setUser} />}
 								/>
 							</>
-						)}
-						{user.isAuthenticated && (
-							<Route path="/logout" element={<Logout setUser={setUser} />} />
 						)}
 					</Route>
 					<Route path="*" element={<NotFound />} />

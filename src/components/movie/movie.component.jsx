@@ -1,5 +1,7 @@
 import react, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Button, Form, Input, Modal } from "antd";
+import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import "./movie.style.css";
 
 export default function MovieComponent(props) {
@@ -8,6 +10,7 @@ export default function MovieComponent(props) {
 	const [movie, setMovie] = useState();
 	const pageOffset = 15;
 	const [page, setPage] = useState(1);
+	const [reviewWriteOpen, setReviewWriteOpen] = useState(false);
 
 	useEffect(() => {
 		const getData = async (e) => {
@@ -43,7 +46,47 @@ export default function MovieComponent(props) {
 		);
 	};
 	const renderPages = () => {
-		return <></>;
+		if (movie.reviews.length <= pageOffset) return <></>;
+		let pagecount = Math.ceil(movie.reviews.length / pageOffset);
+		return (
+			<div className="review-page-block">
+				<div
+					className="prev-page"
+					style={{ visibility: page > 1 ? "visible" : "hidden" }}
+				>
+					<Button
+						shape="circle"
+						icon={<DoubleLeftOutlined />}
+						onClick={() => {
+							if (page > 1) setPage(page - 1);
+						}}
+					/>
+				</div>
+				<div className="current-page">
+					{page}/{pagecount}
+				</div>
+				<div
+					className="next-page"
+					style={{ visibility: page < pagecount ? "visible" : "hidden" }}
+				>
+					<Button
+						shape="circle"
+						icon={<DoubleRightOutlined />}
+						onClick={() => {
+							if (page < pagecount) setPage(page + 1);
+						}}
+					/>
+				</div>
+			</div>
+		);
+	};
+	const sendReview = async (e) => {
+		const form = e.form;
+		form.validateFields((err, value) => {
+			if (err) return;
+
+			console.log(values);
+		});
 	};
 	return (
 		<div className="movie-page">
@@ -141,18 +184,40 @@ export default function MovieComponent(props) {
 						</div>
 					</div>
 				</div>
-				{user.isAuthenticated && (
+				{user.isAuthenticated && movie && movie.url && (
 					<div className="player-block">
 						<h1>Смотреть фильм онлайн</h1>
 						{movie && movie.url && <iframe src={movie.url} />}
 					</div>
 				)}
 				<div className="reviews-block">
-					{user.isAuthenticated && <div className="review-writing"></div>}
-					{renderReviews()}
-					{renderPages()}
+					<div className="review-writing">
+						<h1>Отзывы на фильм</h1>
+						{user.isAuthenticated && (
+							<Button onClick={() => setReviewWriteOpen(true)}>
+								Написать отзыв
+							</Button>
+						)}
+					</div>
+
+					{movie && movie.reviews && renderReviews()}
+					{movie && movie.reviews && renderPages()}
 				</div>
 			</div>
+			<Modal
+				open={reviewWriteOpen}
+				onCancel={() => setReviewWriteOpen(false)}
+				cancelText="Отменить"
+				okText="Отправить"
+				title="Написать отзыв"
+				onOk={sendReview}
+			>
+				<Form>
+					<Form.Item label="Текст отзыва" name="text">
+						<Input />
+					</Form.Item>
+				</Form>
+			</Modal>
 		</div>
 	);
 }
