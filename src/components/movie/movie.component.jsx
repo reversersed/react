@@ -204,7 +204,9 @@ export default function MovieComponent(props) {
 				{user.isAuthenticated && movie && movie.url && (
 					<div className="player-block">
 						<h1>Смотреть фильм онлайн</h1>
-						{movie && movie.url && <iframe src={movie.url} />}
+						{movie && movie.url && (
+							<iframe src={movie.url} allowFullScreen="1" />
+						)}
 					</div>
 				)}
 				<div className="reviews-block">
