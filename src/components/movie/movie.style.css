@@ -154,10 +154,17 @@
 		font-size: 14px;
 	}
 }
-.icon-wrapper {
+.rate-wrapper {
 	display: flex;
-	flex-direction: row;
-	gap: 5px;
+	width: 100%;
+	justify-content: right;
+	margin-top: 10px;
+}
+.rate-wrapper .desc {
+	margin-right: 10px;
+}
+.movie-title-wrapper {
+	display: flex;
 }
 @media screen and (max-width: 600px) {
 	.movie-cover img {

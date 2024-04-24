@@ -1,12 +1,7 @@
 import react, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Slider, Input, Modal } from "antd";
-import {
-	DoubleLeftOutlined,
-	DoubleRightOutlined,
-	FrownOutlined,
-	SmileOutlined,
-} from "@ant-design/icons";
+import { Button, Input, Modal, Rate } from "antd";
+import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import "./movie.style.css";
 
 export default function MovieComponent(props) {
@@ -24,7 +19,7 @@ export default function MovieComponent(props) {
 			const requestOptions = {
 				method: "GET",
 			};
-			return await fetch("api/Movies/" + movieId)
+			return await fetch("/api/Movies/" + movieId)
 				.then((response) => {
 					return response.json();
 				})
@@ -87,9 +82,28 @@ export default function MovieComponent(props) {
 			</div>
 		);
 	};
-	const preColorCls = rating >= 2.5 ? "" : "icon-wrapper-active";
-	const nextColorCls = rating >= 2.5 ? "icon-wrapper-active" : "";
-
+	const handleDeleteClick = () => {
+		const { confirm } = Modal;
+		confirm({
+			title: "Подтвердите удаление",
+			content: "Вы точно хотите удалить данный фильм?",
+			okText: "Да",
+			okType: "danger",
+			cancelText: "Нет",
+			onOk: deleteMovie,
+		});
+	};
+	const deleteMovie = () => {
+		const del = async () => {
+			const requestOptions = {
+				method: "DELETE",
+			};
+			await fetch("/api/movies/" + movieId, requestOptions).then((response) => {
+				response.status === 200 && window.location.replace("/");
+			});
+		};
+		del();
+	};
 	const sendReview = async (e) => {
 		const requestOptions = {
 			method: "POST",
@@ -105,6 +119,8 @@ export default function MovieComponent(props) {
 			}
 		);
 	};
+	const Capitalize = (text) =>
+		text.slice(0, 1).toUpperCase() + text.slice(1, text.length);
 	return (
 		<div className="movie-page">
 			<div className="movie-page-wrapper">
@@ -113,7 +129,18 @@ export default function MovieComponent(props) {
 						<img src={movie && movie.cover ? movie.cover : ""} />
 					</div>
 					<div className="movie-about-info">
-						<h2 className="movie-title">{movie && movie.name}</h2>
+						<div className="movie-title-wrapper">
+							<h2 className="movie-title">{movie && movie.name}</h2>
+							{user.userRole === "admin" && (
+								<Button
+									onClick={handleDeleteClick}
+									style={{ margin: "0 0 0 15px" }}
+									danger
+								>
+									Удалить фильм
+								</Button>
+							)}
+						</div>
 						<div className="inform-fields">
 							{movie && movie.rating != null && (
 								<div>
@@ -159,14 +186,19 @@ export default function MovieComponent(props) {
 
 							{movie && movie.budget && (
 								<div>
-									<span>Бюджет:</span> {movie && movie.budget / 1000000}$ млн.
+									<span>Бюджет:</span>{" "}
+									{movie.budget
+										.toFixed(0)
+										.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + "$"}
 								</div>
 							)}
 
 							{movie && movie.collected && (
 								<div>
 									<span>Сборы:</span>{" "}
-									{movie && Math.floor(movie.collected / 1000000)}$ млн.
+									{movie.collected
+										.toFixed(0)
+										.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + "$"}
 								</div>
 							)}
 							{movie && movie.age && (
@@ -186,9 +218,11 @@ export default function MovieComponent(props) {
 								<div>
 									<span>Жанры</span>{" "}
 									{movie &&
-										movie.genres.map((item) => {
-											return item.name + " ";
-										})}
+										Capitalize(
+											movie.genres
+												.map((item) => item.name.toLowerCase())
+												.join(", ")
+										)}
 								</div>
 							)}
 							{movie && movie.year && (
@@ -242,18 +276,14 @@ export default function MovieComponent(props) {
 					text={reviewText}
 					onChange={(e) => setReviewText(e.target.value)}
 				/>
-				<span>Ваша оценка фильму: {rating}/5</span>
-				<div className="icon-wrapper">
-					<FrownOutlined className={preColorCls} />
-					<Slider
-						min={0}
-						max={5}
-						onChange={setRating}
+				<div className="rate-wrapper">
+					<span className="desc">Поставьте оценку:</span>
+					<Rate
+						allowHalf
 						value={rating}
-						step={0.5}
-						style={{ width: 300 }}
+						onChange={setRating}
+						tooltips={["Ужасно", "Плохо", "Нормально", "Хорошо", "Великолепно"]}
 					/>
-					<SmileOutlined className={nextColorCls} />
 				</div>
 			</Modal>
 		</div>

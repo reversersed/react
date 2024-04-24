@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
-import { LogoutOutlined, LoginOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+	LogoutOutlined,
+	LoginOutlined,
+	HomeOutlined,
+	EditOutlined,
+} from "@ant-design/icons";
 import { Layout, Menu, theme, Modal } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 const confirm = Modal.confirm;
@@ -34,14 +39,14 @@ export default function FilmLayout(args) {
 				const requestOptions = {
 					method: "POST",
 				};
-				await fetch("api/user/logout", requestOptions).then((response) => {
+				await fetch("/api/user/logout", requestOptions).then((response) => {
 					response.status === 200 &&
 						setUser({
 							isAuthenticated: false,
 							userName: "",
 							userRole: "guest",
 						});
-					window.location.replace("/" + path);
+					window.location.reload();
 					return response.json();
 				});
 			},
@@ -54,6 +59,16 @@ export default function FilmLayout(args) {
 			key: "/",
 		},
 	];
+	if (user.userRole == "admin")
+		items = [
+			...items,
+			{
+				label: <Link to="/admin">Админ-панель</Link>,
+				icon: <EditOutlined />,
+				key: "/admin",
+			},
+		];
+
 	if (!user.isAuthenticated)
 		items = [
 			...items,

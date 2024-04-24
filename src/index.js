@@ -8,12 +8,13 @@ import Login from "./components/login/login.component";
 import Registration from "./components/registration/registration.component";
 import NotFound from "./components/notfound/notfound.component";
 import MovieComponent from "./components/movie/movie.component";
+import AdminSection from "./components/admin/admin.component";
 
 function App() {
 	const [user, setUser] = useState({
 		isAuthenticated: false,
 		username: "",
-		userRole: "guest",
+		userRole: "",
 	});
 	useEffect(() => {
 		const getUser = async () => {
@@ -45,6 +46,7 @@ function App() {
 		};
 		getUser();
 	}, [setUser]);
+	if (user.userRole === "") return;
 
 	return (
 		<>
@@ -55,7 +57,13 @@ function App() {
 						element={<FilmLayout user={user} setUser={setUser} />}
 					>
 						<Route index element={<MoviePage />} />
-						<Route path="/:movieId" element={<MovieComponent user={user} />} />
+						<Route
+							path="/movie/:movieId"
+							element={<MovieComponent user={user} />}
+						/>
+						{user.userRole === "admin" && (
+							<Route path="/admin" element={<AdminSection />} />
+						)}
 						{!user.isAuthenticated && (
 							<>
 								<Route path="/login" element={<Login setUser={setUser} />} />

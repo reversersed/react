@@ -8,7 +8,7 @@ export default function MoviePage() {
 	const movieItem = (props) => {
 		return (
 			<Link
-				to={"/" + props.id}
+				to={"/movie/" + props.id}
 				className="movie-item-wrapper"
 				key={props.id + "4"}
 			>
