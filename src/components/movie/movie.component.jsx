@@ -40,7 +40,9 @@ export default function MovieComponent(props) {
 					<div className="review" key={item.id}>
 						<div className="review-header">
 							<span className="user">{item.username}</span>
-							<span className="rating">{item.rating}/5</span>
+							<span className="rating">
+								<Rate value={item.rating} disabled allowHalf />
+							</span>
 						</div>
 						<span className="review-text">{item.text}</span>
 					</div>

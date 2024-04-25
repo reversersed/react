@@ -97,6 +97,7 @@
 .reviews-block .review .review-header .rating {
 	margin-left: auto;
 	margin-right: 20px;
+	scale: 1.2;
 	font-weight: 500;
 }
 .reviews-block .review .review-text {
