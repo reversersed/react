@@ -49,9 +49,7 @@ export default function MoviePage() {
 
 	return (
 		<div className="moviepage">
-			{currentGenre.length > 0 && (
-				<h2>Фильмы с жанром {currentGenre.toLowerCase()}</h2>
-			)}
+			{genreId && <h2>Фильмы с жанром {currentGenre.toLowerCase()}</h2>}
 			<div className="movies-list">{movies.map((item) => movieItem(item))}</div>
 		</div>
 	);
