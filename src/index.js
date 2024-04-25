@@ -57,6 +57,7 @@ function App() {
 						element={<FilmLayout user={user} setUser={setUser} />}
 					>
 						<Route index element={<MoviePage />} />
+						<Route path="/genre/:genreId" element={<MoviePage />} />
 						<Route
 							path="/movie/:movieId"
 							element={<MovieComponent user={user} />}

@@ -1,5 +1,5 @@
 import react, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button, Input, Modal, Rate } from "antd";
 import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import "./movie.style.css";
@@ -119,8 +119,26 @@ export default function MovieComponent(props) {
 			}
 		);
 	};
-	const Capitalize = (text) =>
-		text.slice(0, 1).toUpperCase() + text.slice(1, text.length);
+	const renderGenres = () => {
+		let capitalized = false;
+		let genreRendered = 0;
+		return movie.genres.map((item) => {
+			const this_capitalized = !capitalized;
+			if (!capitalized) capitalized = true;
+			genreRendered++;
+			return (
+				<>
+					<a href={"/genre/" + item.id} key={"genre" + item.id}>
+						{!this_capitalized
+							? item.name.toLowerCase()
+							: item.name.slice(0, 1).toUpperCase() +
+							  item.name.slice(1, item.name.length)}
+					</a>
+					{genreRendered < movie.genres.length ? ", " : ""}
+				</>
+			);
+		});
+	};
 	return (
 		<div className="movie-page">
 			<div className="movie-page-wrapper">
@@ -216,13 +234,7 @@ export default function MovieComponent(props) {
 							)}
 							{movie && movie.genres && (
 								<div>
-									<span>Жанры</span>{" "}
-									{movie &&
-										Capitalize(
-											movie.genres
-												.map((item) => item.name.toLowerCase())
-												.join(", ")
-										)}
+									<span>Жанры</span> {movie && renderGenres()}
 								</div>
 							)}
 							{movie && movie.year && (
