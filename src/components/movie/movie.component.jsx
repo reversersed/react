@@ -235,7 +235,7 @@ export default function MovieComponent(props) {
 								</div>
 							)}
 							{movie && movie.genres && (
-								<div>
+								<div className="genre-block">
 									<span>Жанры</span> {movie && renderGenres()}
 								</div>
 							)}
