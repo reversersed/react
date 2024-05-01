@@ -8,6 +8,7 @@ div.moviepage {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	width: 100%;
 }
 
 .movies-list .movie-item {
@@ -16,11 +17,19 @@ div.moviepage {
 	align-items: center;
 	justify-content: center;
 	margin: 20px;
+	margin-top: 60px;
 	padding: 5px;
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 12px;
 	border-radius: 20px;
 }
-
+.filter-list {
+	position: absolute;
+	width: 300px;
+	height: auto;
+	top: 2px;
+	left: 20px;
+	z-index: 2;
+}
 .movies-list .movie-item .image {
 	max-width: 300px;
 	max-height: 500px;

@@ -50,6 +50,7 @@ export default function AdminSection(props) {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(newGenreName),
 		};
+		if (newGenreName.length < 5) return;
 		await fetch("/api/movies/genre", requestOptions)
 			.then((response) => {
 				if (response.status != 200) return null;
@@ -249,6 +250,7 @@ export default function AdminSection(props) {
 				onOk={addGenre}
 			>
 				<Input
+					required
 					placeholder="Название жанра"
 					value={newGenreName}
 					onChange={(e) => {
