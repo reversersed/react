@@ -1,0 +1,37 @@
+.personal-block {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+.personal-block .personal-header {
+	display: flex;
+	align-items: center;
+	vertical-align: middle;
+}
+.personal-block .personal-header .header {
+	font-size: 18px;
+	font-weight: 600;
+	margin-right: 15px;
+}
+.personal-block .personal-subscription-constructor {
+	display: flex;
+	flex-direction: column;
+	border-bottom: 2px solid black;
+	padding-bottom: 50px;
+}
+.subscription-block {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+.subscription-block .subscription-list {
+	display: flex;
+	flex-wrap: wrap;
+	flex-grow: 1;
+	gap: 25px;
+}
+.subscription-block .subscription-list .subscription-item {
+	width: 150px;
+	height: 200px;
+	background-color: black;
+}

@@ -5,6 +5,7 @@ import {
 	LoginOutlined,
 	HomeOutlined,
 	EditOutlined,
+	UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme, Modal } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
@@ -81,6 +82,11 @@ export default function FilmLayout(args) {
 	else
 		items = [
 			...items,
+			{
+				label: <Link to="/lk">Личный кабинет</Link>,
+				icon: <UserOutlined />,
+				key: "/lk",
+			},
 			{
 				label: <a onClick={confirmLogout}>Выход</a>,
 				icon: <LogoutOutlined />,

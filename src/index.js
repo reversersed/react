@@ -9,6 +9,7 @@ import Registration from "./components/registration/registration.component";
 import NotFound from "./components/notfound/notfound.component";
 import MovieComponent from "./components/movie/movie.component";
 import AdminSection from "./components/admin/admin.component";
+import Personal from "./components/personal/personal.component";
 
 function App() {
 	const [user, setUser] = useState({
@@ -74,6 +75,11 @@ function App() {
 								/>
 							</>
 						)}
+						if(user.isAuthenticated && (
+						<>
+							<Route path="/lk" element={<Personal />} />
+						</>
+						))
 					</Route>
 					<Route path="*" element={<NotFound />} />
 				</Routes>
