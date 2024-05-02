@@ -55,7 +55,7 @@ export default function MoviePage() {
 						</Form.Item>
 						<Form.Item name="genres">
 							<Select
-								style={{ width: "265px", margin: "0 10px 0 0" }}
+								style={{ width: "100%", margin: "0 10px 0 0" }}
 								mode="multiple"
 								allowClear
 								showSearch={false}

@@ -3,16 +3,23 @@ div.notfound {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	flex-wrap: wrap;
 	height: 80vh;
 	color: black;
 }
 div.notfound h1 {
 	font-weight: 800;
 	font-size: 36pt;
+	text-wrap: wrap;
+	text-align: center;
+	padding: 5px;
 }
 div.notfound span {
 	font-size: 16pt;
 	margin-bottom: 30px;
+	padding: 5px;
+	text-wrap: wrap;
+	text-align: center;
 }
 div.notfound a {
 	text-decoration: none;

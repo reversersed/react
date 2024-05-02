@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "https://localhost:7007",
   "dependencies": {
+    "date-fns": "^3.6.0",
     "outlet": "^0.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

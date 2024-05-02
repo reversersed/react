@@ -12,7 +12,9 @@ export default function MovieComponent(props) {
 	const [page, setPage] = useState(1);
 	const [reviewWriteOpen, setReviewWriteOpen] = useState(false);
 	const [rating, setRating] = useState(3);
+	const [subscribed, setSubscribed] = useState(false);
 	const [reviewText, setReviewText] = useState("");
+	const [userReview, setUserReview] = useState(undefined);
 
 	useEffect(() => {
 		const getData = async (e) => {
@@ -24,12 +26,18 @@ export default function MovieComponent(props) {
 					return response.json();
 				})
 				.then((data) => {
-					setMovie(data);
+					setSubscribed(data.subscribed);
+					const review = data.movie.reviews.find(
+						(i) => i.username === user.username
+					);
+					let movie = data.movie;
+					movie.reviews = movie.reviews.filter((i) => i.id != review.id);
+					setUserReview(review);
+					setMovie(movie);
 				});
 		};
 		getData();
 	}, [setMovie]);
-
 	const renderReviews = () => {
 		return (
 			movie &&
@@ -141,6 +149,30 @@ export default function MovieComponent(props) {
 			);
 		});
 	};
+	const removeUserReview = async () => {
+		Modal.confirm({
+			title: "Подвердите удаление",
+			content:
+				"Вы уверены, что хотите удалить отзыв к фильму? Отменить данное действие будет нельзя",
+			okText: "Да",
+			okType: "danger",
+			cancelText: "Нет",
+			onOk: async () => {
+				const requestOptions = {
+					method: "DELETE",
+				};
+				await fetch(`/api/movies/review/${userReview.id}`, requestOptions)
+					.then((response) => response.json())
+					.then((data) => {
+						let updatedMovie = movie;
+						updatedMovie.rating = data;
+						setMovie(updatedMovie);
+						setUserReview(undefined);
+					});
+			},
+		});
+	};
+	if (!movie) return <></>;
 	return (
 		<div className="movie-page">
 			<div className="movie-page-wrapper">
@@ -157,7 +189,7 @@ export default function MovieComponent(props) {
 									style={{ margin: "0 0 0 15px" }}
 									danger
 								>
-									Удалить фильм
+									Удалить
 								</Button>
 							)}
 						</div>
@@ -250,7 +282,7 @@ export default function MovieComponent(props) {
 						</div>
 					</div>
 				</div>
-				{user.isAuthenticated && movie && movie.url && (
+				{user.isAuthenticated && movie && movie.url && subscribed && (
 					<div className="player-block">
 						<h1>Смотреть фильм онлайн</h1>
 						{movie && movie.url && (
@@ -258,18 +290,45 @@ export default function MovieComponent(props) {
 						)}
 					</div>
 				)}
+				{user.isAuthenticated && !subscribed && (
+					<div className="warning-subscription">
+						<span>
+							У Вас нет подписки, которая позволяля бы просматривать данный
+							фильм. Для оформления подписки перейдите в{" "}
+							<a href="/lk">личный кабинет</a>
+						</span>
+					</div>
+				)}
 				<div className="reviews-block">
 					<div className="review-writing">
-						<h1>Отзывы на фильм</h1>
-						{user.isAuthenticated && (
-							<Button onClick={() => setReviewWriteOpen(true)}>
-								Написать отзыв
-							</Button>
+						<h1>Отзывы</h1>
+						{user.isAuthenticated && subscribed && userReview == undefined && (
+							<Button onClick={() => setReviewWriteOpen(true)}>Написать</Button>
 						)}
 					</div>
-					{(!movie || !movie.reviews || movie.reviews.length <= 0) && (
-						<h4 style={{ margin: 20 }}>Отзывов пока нет...</h4>
+					{userReview != undefined && page == 1 && (
+						<div className="user-review-block">
+							<div className="user-review-header">
+								<h2>Ваш отзыв</h2>
+								<Button danger onClick={removeUserReview}>
+									Удалить
+								</Button>
+							</div>
+							<div className="review" key={userReview.id}>
+								<div className="review-header">
+									<span className="user">{userReview.username}</span>
+									<span className="rating">
+										<Rate value={userReview.rating} disabled allowHalf />
+									</span>
+								</div>
+								<span className="review-text">{userReview.text}</span>
+							</div>
+						</div>
 					)}
+					{(!movie || !movie.reviews || movie.reviews.length <= 0) &&
+						userReview == undefined && (
+							<h4 style={{ margin: 20 }}>Отзывов пока нет...</h4>
+						)}
 					{movie && movie.reviews && renderReviews()}
 					{movie && movie.reviews && renderPages()}
 				</div>

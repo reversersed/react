@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Button, Form, Modal, InputNumber, Select } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { format, sub } from "date-fns";
 
 import "./personal.style.css";
 
@@ -13,6 +14,7 @@ export default function Personal() {
 	const [currentCost, setCurrentCost] = useState(0);
 	const [subscriptions, setSubscriptions] = useState([]);
 	const options = [];
+	const { confirm } = Modal;
 
 	useEffect(() => {
 		const getGenres = async () => {
@@ -64,10 +66,59 @@ export default function Personal() {
 		};
 		setTimeout(pay, 2000);
 	};
+	const cancelSubscription = (subscription) => {
+		confirm({
+			title: "Подтвердите действие",
+			content: `Вы уверены, что хотите отменить подписку стоимостью ${subscription.cost} ₽? Обратите внимания: деньги за оставшееся время возвращены не будут`,
+			okText: "Да",
+			okType: "danger",
+			cancelText: "Нет",
+			onOk: async () => {
+				const requestOptions = {
+					method: "DELETE",
+				};
+				await fetch(
+					`/api/user/unsubscribe/${subscription.id}`,
+					requestOptions
+				).then((response) => {
+					setSubscriptions(
+						subscriptions.filter((o) => o.id != subscription.id)
+					);
+				});
+			},
+		});
+	};
 	const renderSubscriptions = () =>
-		subscriptions
-			.reverse()
-			.map((item) => <div key={item.id} className="subscription-item"></div>);
+		subscriptions.reverse().map((item) => (
+			<div key={item.id} className="subscription-item">
+				<div className="genre-list">
+					{item.genres.map((g) => (
+						<span className="genre-item" key={g}>
+							{genres.find((x) => x.id == g).name}
+						</span>
+					))}
+				</div>
+				<div className="item-content">
+					<p>
+						Стоимость подписки:
+						<span>{item.cost} ₽</span>
+					</p>
+					<p>
+						Дата оформления:
+						<span>{format(item.regDate, "dd.MM.yyyy")}</span>
+					</p>
+					<p>
+						Окончание действия:
+						<span>{format(item.expirationTime, "dd.MM.yyyy")}</span>
+					</p>
+				</div>
+				<div className="item-footer">
+					<Button danger onClick={() => cancelSubscription(item)}>
+						Отменить подписку
+					</Button>
+				</div>
+			</div>
+		));
 
 	const createSub = async (e) => {
 		const requestOptions = {
@@ -107,7 +158,7 @@ export default function Personal() {
 						</p>
 					)}
 					<Select
-						style={{ width: "30%" }}
+						style={{ width: "30%", minWidth: "200px" }}
 						mode="multiple"
 						allowClear
 						showSearch={false}
@@ -117,7 +168,7 @@ export default function Personal() {
 						options={options}
 					/>
 					<Button
-						style={{ width: "30%", marginTop: "25px" }}
+						style={{ width: "30%", marginTop: "25px", minWidth: "200px" }}
 						type="primary"
 						disabled={user.balance < currentCost || currentCost <= 0}
 						onClick={createSub}

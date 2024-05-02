@@ -163,6 +163,49 @@
 	.reviews-block .review {
 		font-size: 14px;
 	}
+	.reviews-block .review .review-header .rating {
+		width: 100%;
+		scale: 1;
+		margin: 0;
+	}
+}
+.user-review-block {
+	display: flex;
+	flex-direction: column;
+	height: auto;
+	border-bottom: 1px solid black;
+	margin-bottom: 15px;
+}
+.user-review-block .user-review-header {
+	display: flex;
+	gap: 20px;
+	height: auto;
+	vertical-align: middle;
+	align-items: center;
+}
+.warning-subscription {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-content: center;
+	margin-top: 20px;
+}
+.warning-subscription span {
+	font-size: 16px;
+	font-weight: bold;
+	text-wrap: wrap;
+}
+.warning-subscription span a {
+	font-size: 16px;
+	text-decoration: underline;
+	color: gray;
+	transition: 0.2s all;
+}
+.warning-subscription span a:hover {
+	transition: 0.4s all;
+	font-size: 18px;
+	text-decoration: none;
+	color: black;
 }
 .rate-wrapper {
 	display: flex;

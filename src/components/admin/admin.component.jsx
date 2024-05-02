@@ -184,7 +184,11 @@ export default function AdminSection(props) {
 		<>
 			<div className="main-admin-block">
 				<h1>Панель администратора</h1>
-				<Form onFinish={addMovie} style={{ width: "350px" }} form={form}>
+				<Form
+					onFinish={addMovie}
+					style={{ maxWidth: "350px", width: "100%" }}
+					form={form}
+				>
 					<h3>Обязательные параметры</h3>
 					<Form.Item
 						name="name"
@@ -203,10 +207,10 @@ export default function AdminSection(props) {
 							noStyle
 							name="genres"
 							rules={[{ required: true, message: "Выберите хотя бы 1 жанр" }]}
-							style={{ width: "318px" }}
+							style={{ width: "100%" }}
 						>
 							<Select
-								style={{ width: "318px" }}
+								style={{ width: "87%", maxWidth: "315px" }}
 								mode="multiple"
 								allowClear
 								showSearch={false}
