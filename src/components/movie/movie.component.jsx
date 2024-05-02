@@ -124,11 +124,19 @@ export default function MovieComponent(props) {
 				Rating: rating,
 			}),
 		};
-		return fetch(`/api/Movies/${movie.id}/review`, requestOptions).then(
-			(response) => {
-				response.status === 200 && window.location.reload();
-			}
-		);
+		return fetch(`/api/Movies/${movie.id}/review`, requestOptions)
+			.then((response) => {
+				if (response.status != 200) return;
+				return response.json();
+			})
+			.then((data) => {
+				let updatedMovie = movie;
+				updatedMovie.rating = data.rating;
+				setMovie(updatedMovie);
+				setUserReview(data.review);
+				setReviewText("");
+				setReviewWriteOpen(false);
+			});
 	};
 	const renderGenres = () => {
 		let capitalized = false;
