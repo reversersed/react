@@ -31,7 +31,8 @@ export default function MovieComponent(props) {
 						(i) => i.username === user.username
 					);
 					let movie = data.movie;
-					movie.reviews = movie.reviews.filter((i) => i.id != review.id);
+					if (review)
+						movie.reviews = movie.reviews.filter((i) => i.id != review.id);
 					setUserReview(review);
 					setMovie(movie);
 				});
@@ -291,11 +292,19 @@ export default function MovieComponent(props) {
 					</div>
 				)}
 				{user.isAuthenticated && !subscribed && (
-					<div className="warning-subscription">
+					<div className="warning">
 						<span>
 							У Вас нет подписки, которая позволяля бы просматривать данный
 							фильм. Для оформления подписки перейдите в{" "}
 							<a href="/lk">личный кабинет</a>
+						</span>
+					</div>
+				)}
+				{!user.isAuthenticated && (
+					<div className="warning">
+						<span>
+							Для просмотра фильмов и написания отзывов к ним, пожалуйста,{" "}
+							<a href="/login">авторизуйтесь</a>
 						</span>
 					</div>
 				)}

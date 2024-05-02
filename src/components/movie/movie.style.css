@@ -183,25 +183,25 @@
 	vertical-align: middle;
 	align-items: center;
 }
-.warning-subscription {
+.warning {
 	display: flex;
 	width: 100%;
 	justify-content: center;
 	align-content: center;
 	margin-top: 20px;
 }
-.warning-subscription span {
+.warning span {
 	font-size: 16px;
 	font-weight: bold;
 	text-wrap: wrap;
 }
-.warning-subscription span a {
+.warning span a {
 	font-size: 16px;
 	text-decoration: underline;
 	color: gray;
 	transition: 0.2s all;
 }
-.warning-subscription span a:hover {
+.warning span a:hover {
 	transition: 0.4s all;
 	font-size: 18px;
 	text-decoration: none;
