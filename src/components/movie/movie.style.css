@@ -32,7 +32,8 @@
 	transition: 0.5s all;
 }
 .movie-cover img {
-	min-height: 700px;
+	object-fit: fill;
+	max-height: 700px;
 	height: 100%;
 	border-radius: 30px;
 }
